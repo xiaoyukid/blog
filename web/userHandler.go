@@ -1,6 +1,7 @@
 package web
 
 import (
+	"blog/middleware"
 	models "blog/model"
 	"blog/service"
 	"fmt"
@@ -75,7 +76,7 @@ func (b *UserHandler) Login(c *gin.Context) {
 		"exp":      exp,
 	})
 
-	tokenString, err := token.SignedString([]byte("my_secret_key"))
+	tokenString, err := token.SignedString(middleware.JwtSecret)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate token"})
 		return
